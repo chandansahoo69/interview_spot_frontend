@@ -10,24 +10,48 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const menus = [
-    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "user", link: "/", icon: AiOutlineUser },
-    { name: "messages", link: "/", icon: FiMessageSquare },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", link: "/", icon: FiFolder },
-    { name: "Cart", link: "/", icon: FiShoppingCart },
-    { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+    {
+      name: "Schedule Interview",
+      link: "/schedule-interview",
+      icon: AiOutlineUser,
+    },
+    {
+      name: "Completed Interview",
+      link: "/completed-interview",
+      icon: FiMessageSquare,
+    },
+    { name: "My Profile", link: "/profile", icon: TbReportAnalytics },
+    // { name: "File Manager", link: "/", icon: FiFolder },
+    // { name: "Cart", link: "/", icon: FiShoppingCart },
+    // { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
+    // { name: "Setting", link: "/", icon: RiSettings4Line },
   ];
+
   const [open, setOpen] = useState(true);
+  const [tab, setTab] = useState(0);
+
   return (
     <>
-      <section className="flex gap-6">
+      <section className="flex gap-6 bg-[#f5f6fa]">
         <div
-          className={`bg-[#0e0e0e] min-h-screen ${
+          className={`bg-[#ffffff] min-h-screen ${
             open ? "w-72" : "w-16"
           } duration-500 text-gray-100 px-4`}
         >
+          <div className="flex flex-row gap-2">
+            {!open ? (
+              <img src="./Assets/logo-interviewspot.png" alt="" />
+            ) : (
+              <>
+                <img src="./Assets/logo-interviewspot.png" alt="" />
+                <div className="flex flex-col font-jakarta text-2xl font-bold">
+                  <p className="text-[#dcf247]">Interview</p>
+                  <p className="mt-[-4px] text-[#000]">Spot</p>
+                </div>
+              </>
+            )}
+          </div>
           <div className="py-3 flex justify-end">
             <HiMenuAlt3
               size={26}
@@ -40,13 +64,22 @@ const Layout = () => {
               <Link
                 to={menu?.link}
                 key={i}
+                onClick={() => setTab(i)}
                 className={` ${
                   menu?.margin && "mt-5"
-                } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+                } group flex items-center text-sm ${
+                  tab === i && "bg-[#dcf247]"
+                } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md`}
               >
-                <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                <div>
+                  {React.createElement(menu?.icon, {
+                    size: "20",
+                    color: `${tab === i ? "#000" : "#b1b1b1"}`,
+                  })}
+                </div>
                 <h2
                   style={{
+                    color: `${tab === i ? "#000" : "#b1b1b1"}`,
                     transitionDelay: `${i + 3}00ms`,
                   }}
                   className={`whitespace-pre duration-500 ${
@@ -58,7 +91,7 @@ const Layout = () => {
                 <h2
                   className={`${
                     open && "hidden"
-                  } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
                 >
                   {menu?.name}
                 </h2>
@@ -67,18 +100,6 @@ const Layout = () => {
           </div>
         </div>
         <div className="m-3 text-xl text-gray-900 font-semibold">
-          REACT TAILWIND Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Eum ea iste, vel nostrum aut est dolore, ad dolor soluta
-          sapiente repellat ipsum sit dolorum molestias praesentium at.
-          Blanditiis excepturi doloribus commodi qui illo possimus tenetur
-          laboriosam odio perferendis asperiores optio nemo, sed accusamus nobis
-          ullam sit quod ex? Pariatur quidem modi quibusdam sit quisquam ea
-          voluptate, ut doloremque vel enim laudantium deleniti itaque odit
-          tenetur fugit beatae blanditiis quaerat iusto natus obcaecati eius!
-          Eaque omnis eveniet vero placeat quia voluptates odit laboriosam
-          sapiente est voluptatem nihil voluptatum debitis tempore deleniti
-          dolores perspiciatis corporis dolorum enim soluta, atque, illo
-          pariatur. Recusandae.
           <Outlet />
         </div>
       </section>

@@ -17,6 +17,16 @@ const LoginPage = () => {
   const handleClick = () => {
     // setIsSubmitting(true);
 
+    if (inputs.email === "") {
+      toast.error("Please enter an email");
+      return;
+    }
+
+    if (inputs.password === "") {
+      toast.error("Please enter a password");
+      return;
+    }
+
     AuthService.login(inputs)
       .then((response) => {
         toast.success("Logged in successfully!");
@@ -50,12 +60,12 @@ const LoginPage = () => {
         <div className="flex flex-row gap-2">
           <img src="./Assets/logo-interviewspot.png" alt="" />
           <div className="flex flex-col font-jakarta text-2xl font-bold">
-            <p className="text-[#ddeb7f]">Interview</p>
+            <p className="text-[#d1e552]">Interview</p>
             <p className="mt-[-4px]">Spot</p>
           </div>
         </div>
       </nav>
-      <section className="bg-[#ddeb7f] flex-1 flex justify-center items-center">
+      <section className="bg-[#d1e552] flex-1 flex justify-center items-center">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

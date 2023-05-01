@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const SignupPage = () => {
   return (
@@ -7,19 +8,19 @@ const SignupPage = () => {
         <div className="flex flex-row gap-2">
           <img src="./Assets/logo-interviewspot.png" alt="" />
           <div className="flex flex-col font-jakarta text-2xl font-bold">
-            <p className="text-[#ddeb7f]">Interview</p>
+            <p className="text-[#d1e552]">Interview</p>
             <p className="mt-[-4px]">Spot</p>
           </div>
         </div>
       </nav>
-      <section className="bg-[#ddeb7f] flex-1 flex items-center p-5 md:p-0">
+      <section className="bg-[#d1e552] flex-1 flex items-center p-5 md:p-0">
         <div className="flex flex-col items-center justify-center mx-auto md:h-screen">
           <div className="w-full bg-white rounded-lg shadow">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Create and account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <div className="space-y-4 md:space-y-6">
                 <div>
                   <div className="flex gap-2">
                     <div>
@@ -149,14 +150,14 @@ const SignupPage = () => {
                 </button>
                 <p className="text-sm font-light text-gray-500">
                   Already have an account?{" "}
-                  <a
-                    href="#"
+                  <NavLink
+                    to="/login"
                     className="font-medium text-primary-600 hover:underline"
                   >
                     Login here
-                  </a>
+                  </NavLink>
                 </p>
-              </form>
+              </div>
             </div>
           </div>
         </div>
