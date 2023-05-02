@@ -7,6 +7,7 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import LogoInterviewspot from "assets/images/logoInterviewspot.png";
 
 const Layout = () => {
   const menus = [
@@ -37,14 +38,13 @@ const Layout = () => {
         <div
           className={`bg-[#ffffff] min-h-screen ${
             open ? "w-72" : "w-16"
-          } duration-500 text-gray-100 px-4`}
-        >
+          } duration-500 text-gray-100 px-4`}>
           <div className="flex flex-row gap-2">
             {!open ? (
-              <img src="./Assets/logo-interviewspot.png" alt="" />
+              <img src={LogoInterviewspot} alt="" className="pt-1" />
             ) : (
               <>
-                <img src="./Assets/logo-interviewspot.png" alt="" />
+                <img src={LogoInterviewspot} alt="" className="pt-1" />
                 <div className="flex flex-col font-jakarta text-2xl font-bold">
                   <p className="text-[#dcf247]">Interview</p>
                   <p className="mt-[-4px] text-[#000]">Spot</p>
@@ -55,7 +55,7 @@ const Layout = () => {
           <div className="py-3 flex justify-end">
             <HiMenuAlt3
               size={26}
-              className="cursor-pointer"
+              className="cursor-pointer text-black"
               onClick={() => setOpen(!open)}
             />
           </div>
@@ -69,8 +69,7 @@ const Layout = () => {
                   menu?.margin && "mt-5"
                 } group flex items-center text-sm ${
                   tab === i && "bg-[#dcf247]"
-                } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md`}
-              >
+                } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md`}>
                 <div>
                   {React.createElement(menu?.icon, {
                     size: "20",
@@ -84,15 +83,13 @@ const Layout = () => {
                   }}
                   className={`whitespace-pre duration-500 ${
                     !open && "opacity-0 translate-x-28 overflow-hidden"
-                  }`}
-                >
+                  }`}>
                   {menu?.name}
                 </h2>
                 <h2
                   className={`${
                     open && "hidden"
-                  } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
-                >
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
                   {menu?.name}
                 </h2>
               </Link>
