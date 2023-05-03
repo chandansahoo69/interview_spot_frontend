@@ -22,7 +22,7 @@ const Layout = () => {
       link: "/completed-interview",
       icon: FiMessageSquare,
     },
-    { name: "My Profile", link: "/profile", icon: TbReportAnalytics },
+    { name: "My ", link: "/profile", icon: TbReportAnalytics },
     // { name: "File Manager", link: "/", icon: FiFolder },
     // { name: "Cart", link: "/", icon: FiShoppingCart },
     // { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
@@ -96,7 +96,7 @@ const Layout = () => {
             ))}
           </div>
         </div>
-        <div className="m-3 text-xl text-gray-900 font-semibold">
+        <div className="m-3 text-xl text-gray-900 font-semibold w-full">
           <Outlet />
         </div>
       </section>
