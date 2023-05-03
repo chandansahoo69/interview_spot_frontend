@@ -1,7 +1,64 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import AuthService from "auth/authService";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    role: "",
+  });
+
+  const handleClick = () => {
+    // setIsSubmitting(true);
+
+    if (inputs.username === "") {
+      toast.error("Please enter an username");
+      return;
+    }
+
+    if (inputs.email === "") {
+      toast.error("Please enter an email");
+      return;
+    }
+
+    if (inputs.password === "") {
+      toast.error("Please enter a password");
+      return;
+    }
+
+    if (inputs.role === "") {
+      toast.error("Please select a role");
+      return;
+    }
+
+    if (inputs.confirm_password === "") {
+      toast.error("Please enter a confirm password");
+      return;
+    }
+
+    if (inputs.confirm_password !== inputs.password) {
+      toast.error("Password not matching with confirm password");
+      return;
+    }
+
+    AuthService.register(inputs)
+      .then((response) => {
+        toast.success(response?.message);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log("register err", err);
+        toast.error(err?.data?.message);
+      });
+
+    // setIsSubmitting(false);
+  };
+
   return (
     <div className="h-screen flex flex-col">
       <nav className="px-3 py-2 flex flex-0 justify-between md:px-5 md:py-2">
@@ -22,42 +79,23 @@ const SignupPage = () => {
               </h1>
               <div className="space-y-4 md:space-y-6">
                 <div>
-                  <div className="flex gap-2">
-                    <div>
-                      <label
-                        for="firstName"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
-                      >
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        id="firstName"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="first name"
-                        required=""
-                      />
-                    </div>
-                    <div>
-                      <div>
-                        <label
-                          for="lastName"
-                          className="block mb-2 text-sm font-medium text-gray-900 "
-                        >
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          name="lastName"
-                          id="lastName"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Last Name"
-                          required=""
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <label
+                    for="username"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
+                  >
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={inputs.username}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="user name"
+                    required=""
+                  />
                 </div>
                 <div>
                   <label
@@ -69,19 +107,26 @@ const SignupPage = () => {
                   <input
                     type="email"
                     name="email"
-                    id="email"
+                    value={inputs.email}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="name@company.com"
                     required=""
                   />
                 </div>
                 <div>
-                  <label for="countries" class="block mb-2 text-sm font-medium">
+                  <label for="role" className="block mb-2 text-sm font-medium">
                     Select your role
                   </label>
                   <select
-                    id="role"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    name="role"
+                    value={inputs.role}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   >
                     <option selected>Choose your role</option>
                     <option value="interviewee">interviewee</option>
@@ -98,7 +143,10 @@ const SignupPage = () => {
                   <input
                     type="password"
                     name="password"
-                    id="password"
+                    value={inputs.password}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     required=""
@@ -106,15 +154,18 @@ const SignupPage = () => {
                 </div>
                 <div>
                   <label
-                    for="confirm-password"
+                    for="confirm_password"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Confirm password
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
+                    type="password"
+                    name="confirm_password"
+                    value={inputs.confirm_password}
+                    onChange={(e) => {
+                      setInputs({ ...inputs, [e.target.name]: e.target.value });
+                    }}
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required=""
@@ -143,7 +194,7 @@ const SignupPage = () => {
                   </div>
                 </div>
                 <button
-                  type="submit"
+                  onClick={handleClick}
                   className="w-full text-white bg-[#7b6e5b] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Create an account

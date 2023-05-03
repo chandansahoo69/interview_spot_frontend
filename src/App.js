@@ -2,15 +2,24 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import UnAuthRoute from "screens/routes/un-auth-route/UnAuthRoute";
 import ProtectedRoute from "screens/routes/protected-route/ProtectedRoute";
-import Dashboard from "screens/dashboard/Dashboard";
+import IntervieweeDashboard from "screens/interviewee-dashboard/IntervieweeDashboard";
 import Layout from "screens/layout/Layout";
 import LoginPage from "screens/login/LoginPage";
 import SignupPage from "screens/signup/SignupPage";
-import Profile from "screens/profile/Profile";
-import CompletedInterview from "screens/completed-interview/CompletedInterview";
-import ScheduleInterview from "screens/schedule-interview/ScheduleInterview";
+import IntervieweeProfile from "screens/interviewee-profile/IntervieweeProfile";
+import InterviewerCompletedInterview from "screens/interviewer-completed-interview/InterviewerCompletedInterview";
+import InterviewerScheduleInterview from "screens/interviewer-schedule-interview/InterviewerScheduleInterview";
+import InterviewerDashboard from "screens/interviewer-dashboard/InterviewerDashboard";
+import { useSelector } from "react-redux";
+import lodash from "lodash";
+import InterviewerProfile from "screens/interviewer-profile/InterviewerProfile";
+import IntervieweeScheduleInterview from "screens/interviewee-schedule-interview/IntervieweeScheduleInterview";
+import IntervieweeCompletedInterview from "screens/interviewee-completed-interview/IntervieweeCompletedInterview";
 
 function App() {
+  const { userResponse } = useSelector((state) => state.auth);
+
+  console.log("first", userResponse);
   return (
     <>
       <Routes>
@@ -20,14 +29,55 @@ function App() {
         </Route>
         <Route path="/" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/schedule-interview" element={<ScheduleInterview />} />
             <Route
-              path="/completed-interview"
-              element={<CompletedInterview />}
+              path="/interviewer/dashboard"
+              element={<InterviewerDashboard />}
             />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Navigate replace to="/dashboard" />} />
+            <Route
+              path="/interviewee/dashboard"
+              element={<IntervieweeDashboard />}
+            />
+            <Route
+              path="interviewer/schedule-interview"
+              element={<InterviewerScheduleInterview />}
+            />
+            <Route
+              path="interviewer/completed-interview"
+              element={<InterviewerCompletedInterview />}
+            />
+            <Route
+              path="interviewer/profile"
+              element={<InterviewerProfile />}
+            />
+            <Route
+              path="interviewee/profile"
+              element={<IntervieweeProfile />}
+            />
+            <Route
+              path="/interviewee/dashboard"
+              element={<IntervieweeDashboard />}
+            />
+            <Route
+              path="interviewee/schedule-interview"
+              element={<IntervieweeScheduleInterview />}
+            />
+            <Route
+              path="interviewee/completed-interview"
+              element={<IntervieweeCompletedInterview />}
+            />
+
+            {lodash.isEmpty(userResponse) && (
+              <Route
+                path="/"
+                element={<Navigate replace to="/interviewer/dashboard" />}
+              />
+            )}
+            <Route
+              path="/"
+              element={
+                <Navigate replace to={`/${userResponse.role}/dashboard`} />
+              }
+            />
           </Route>
         </Route>
       </Routes>

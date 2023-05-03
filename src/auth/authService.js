@@ -8,6 +8,13 @@ export default class AuthService {
     });
   }
 
+  static register(args) {
+    return http.publicPost({
+      endpoint: "/register",
+      payload: args,
+    });
+  }
+
   static getCurrentUser() {
     return http.get({
       endpoint: "/me",
