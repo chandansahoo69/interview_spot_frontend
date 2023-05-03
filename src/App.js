@@ -46,11 +46,11 @@ function App() {
               element={<InterviewerCompletedInterview />}
             />
             <Route
-              path="interviewer/profile"
+              path="interviewer/profile/:id"
               element={<InterviewerProfile />}
             />
             <Route
-              path="interviewee/profile"
+              path="interviewee/profile/:id"
               element={<IntervieweeProfile />}
             />
             <Route

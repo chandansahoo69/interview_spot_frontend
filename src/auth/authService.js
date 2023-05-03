@@ -34,11 +34,17 @@ export default class AuthService {
     });
   }
 
-  //   static getHolidays() {
-  //     return http.get({
-  //       endpoint: "/holidays",
-  //     });
-  //   }
+  static getIntervieweeProfile(args) {
+    return http.get({
+      endpoint: `/interviewee/${args}`,
+    });
+  }
+
+  static getInterviewerProfile(args) {
+    return http.get({
+      endpoint: `/interviewer/${args}`,
+    });
+  }
 
   //   static getLeaves() {
   //     return http.get({

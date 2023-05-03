@@ -27,7 +27,7 @@ const Layout = () => {
     },
     {
       name: "My Profile",
-      link: `${userResponse?.role}/profile`,
+      link: `${userResponse?.role}/profile/${userResponse?.userId}`,
       icon: TbReportAnalytics,
     },
     // { name: "File Manager", link: "/", icon: FiFolder },
