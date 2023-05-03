@@ -29,7 +29,7 @@ const LoginPage = () => {
 
     AuthService.login(inputs)
       .then((response) => {
-        toast.success("Logged in successfully!");
+        toast.success(response?.message);
 
         if (response) {
           //   console.log("login response", response.user, response);
@@ -43,12 +43,13 @@ const LoginPage = () => {
             value: JSON.stringify(response.user),
           });
           dispatch(login(response?.user));
-          navigate("/");
+          console.log(`/${response.user.role}/dashboard`);
+          navigate(`/${response.user.role}/dashboard`);
         }
       })
       .catch((err) => {
         console.log("login err", err);
-        toast.error("Email and password do not match.");
+        toast.error(err?.data?.error);
       });
 
     // setIsSubmitting(false);

@@ -8,21 +8,28 @@ import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import LogoInterviewspot from "assets/images/logoInterviewspot.png";
+import { useSelector } from "react-redux";
 
 const Layout = () => {
+  const { userResponse } = useSelector((state) => state.auth);
+
   const menus = [
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
     {
       name: "Schedule Interview",
-      link: "/schedule-interview",
+      link: `${userResponse?.role}/schedule-interview`,
       icon: AiOutlineUser,
     },
     {
       name: "Completed Interview",
-      link: "/completed-interview",
+      link: `${userResponse?.role}/completed-interview`,
       icon: FiMessageSquare,
     },
-    { name: "My ", link: "/profile", icon: TbReportAnalytics },
+    {
+      name: "My Profile",
+      link: `${userResponse?.role}/profile`,
+      icon: TbReportAnalytics,
+    },
     // { name: "File Manager", link: "/", icon: FiFolder },
     // { name: "Cart", link: "/", icon: FiShoppingCart },
     // { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
@@ -38,7 +45,8 @@ const Layout = () => {
         <div
           className={`bg-[#ffffff] min-h-screen ${
             open ? "w-72" : "w-16"
-          } duration-500 text-gray-100 px-4`}>
+          } duration-500 text-gray-100 px-4`}
+        >
           <div className="flex flex-row gap-2">
             {!open ? (
               <img src={LogoInterviewspot} alt="" className="pt-1" />
@@ -69,7 +77,8 @@ const Layout = () => {
                   menu?.margin && "mt-5"
                 } group flex items-center text-sm ${
                   tab === i && "bg-[#dcf247]"
-                } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md`}>
+                } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md`}
+              >
                 <div>
                   {React.createElement(menu?.icon, {
                     size: "20",
@@ -83,13 +92,15 @@ const Layout = () => {
                   }}
                   className={`whitespace-pre duration-500 ${
                     !open && "opacity-0 translate-x-28 overflow-hidden"
-                  }`}>
+                  }`}
+                >
                   {menu?.name}
                 </h2>
                 <h2
                   className={`${
                     open && "hidden"
-                  } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
+                >
                   {menu?.name}
                 </h2>
               </Link>

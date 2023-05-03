@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import profileFemalePic from "assets/images/profile-female.jpg";
 import { MdEmail } from "react-icons/md";
@@ -7,7 +5,7 @@ import { BsTelephoneFill } from "react-icons/bs";
 import { FaHome } from "react-icons/fa";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const Profile = () => {
+const IntervieweeProfile = () => {
   return (
     <>
       <div className="flex gap-5">
@@ -143,12 +141,14 @@ const Profile = () => {
                 <div className="flex gap-2">
                   <a
                     href="#"
-                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white">
+                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white"
+                  >
                     Github
                   </a>
                   <a
                     href="#"
-                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-limeGreen hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white">
+                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-limeGreen hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white"
+                  >
                     Hosted Link
                   </a>
                 </div>
@@ -175,12 +175,14 @@ const Profile = () => {
                 <div className="flex gap-2">
                   <a
                     href="#"
-                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white">
+                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white"
+                  >
                     Github
                   </a>
                   <a
                     href="#"
-                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-limeGreen hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white">
+                    className="items-center px-10 py-2 text-xs font-medium text-white text-center rounded-lg bg-limeGreen hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white"
+                  >
                     Hosted Link
                   </a>
                 </div>
@@ -252,18 +254,21 @@ const Profile = () => {
               <div className="flex flex-col gap-2 mt-4 md:mt-2">
                 <a
                   href="#"
-                  className="items-center px-16 py-2 text-sm font-medium text-white text-center bg-limeGreen rounded-lg hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white">
+                  className="items-center px-16 py-2 text-sm font-medium text-white text-center bg-limeGreen rounded-lg hover:bg-[#dbff4a] focus:ring-4 focus:outline-none focus:ring-white"
+                >
                   Portfolio
                 </a>
                 <a
                   href="#"
                   className="items-center px-20 py-2 text-white text-sm font-medium text-center  
-                  bg-[#0077b4] rounded-lg hover:bg-[#0090da] focus:ring-4 focus:outline-none focus:ring-white">
+                  bg-[#0077b4] rounded-lg hover:bg-[#0090da] focus:ring-4 focus:outline-none focus:ring-white"
+                >
                   LinkedIn
                 </a>
                 <a
                   href="#"
-                  className="items-center px-20 py-2 text-sm font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white">
+                  className="items-center px-20 py-2 text-sm font-medium text-white text-center rounded-lg bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-white"
+                >
                   Github
                 </a>
               </div>
@@ -309,4 +314,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default IntervieweeProfile;
