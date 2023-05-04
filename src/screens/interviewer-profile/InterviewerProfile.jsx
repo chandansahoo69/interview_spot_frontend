@@ -3,11 +3,20 @@ import ProfileFemale from "assets/images/profile-female.jpg";
 import { MdEmail } from "react-icons/md";
 import { BsTelephoneFill } from "react-icons/bs";
 import { ImLinkedin } from "react-icons/im";
+import { AiFillEdit } from "react-icons/ai";
 
 const InterviewerProfile = () => {
   return (
     <div className="flex flex-col gap-4 items-center">
-      <h1>My Profile</h1>
+      <div className="w-[640px] flex justify-between">
+        <h1>My Profile</h1>
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 flex gap-1 items-center">
+          <AiFillEdit />
+          Edit
+        </button>
+      </div>
       <div class="w-[640px] p-6 mx-auto bg-white border border-gray-200 rounded-lg shadow flex justify-center">
         <div className="flex justify-center grow">
           <div class="flex flex-col items-center">
