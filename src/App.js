@@ -15,6 +15,8 @@ import lodash from "lodash";
 import InterviewerProfile from "screens/interviewer-profile/InterviewerProfile";
 import IntervieweeScheduleInterview from "screens/interviewee-schedule-interview/IntervieweeScheduleInterview";
 import IntervieweeCompletedInterview from "screens/interviewee-completed-interview/IntervieweeCompletedInterview";
+import Feedback from "screens/feedback/Feedback";
+import ViewInterview from "screens/view-interview/ViewInterview";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -44,6 +46,15 @@ function App() {
             <Route
               path="interviewer/completed-interview"
               element={<InterviewerCompletedInterview />}
+            />
+            <Route path="interviewer/feedback" element={<Feedback />} />
+            <Route
+              path="interviewer/view-interview"
+              element={<ViewInterview />}
+            />
+            <Route
+              path="interviewee/view-interview"
+              element={<ViewInterview />}
             />
             <Route
               path="interviewer/profile/:id"
