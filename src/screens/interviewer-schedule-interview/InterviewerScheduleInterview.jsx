@@ -10,11 +10,24 @@ import AuthService from "auth/authService";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
+const timeSlots = [
+  "09:00",
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+];
+
 const InterviewerScheduleInterview = () => {
   const { userResponse } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState("");
   const [query, setQuery] = useState("");
   const [intervieweeNames, setIntervieweeNames] = useState([]);
+  const [checkBookedSlot, setCheckBookedSlot] = useState([]);
   const initialState = {
     createdBy: "",
     interviewerId: "",
@@ -49,9 +62,27 @@ const InterviewerScheduleInterview = () => {
       });
   }, []);
 
-  //   useEffect(() => {
+  useEffect(() => {
+    let isSlotAvailable = false;
+    userResponse.bookedSlot &&
+      userResponse.bookedSlot.map((slot) => {
+        const previousDate = new Date(slot?.date);
+        previousDate.setDate(previousDate.getDate() - 1);
 
-  //   }, [inputs.date])
+        if (
+          previousDate.toLocaleDateString() ===
+          new Date(inputs?.date).toLocaleDateString()
+        ) {
+          console.log("matched slot", slot);
+          isSlotAvailable = true;
+          setCheckBookedSlot(slot?.timeSlot);
+        }
+      });
+
+    if (!isSlotAvailable) {
+      setCheckBookedSlot([]);
+    }
+  }, [inputs.date]);
 
   const handleClick = () => {
     inputs.interviewee = selected.username;
@@ -220,7 +251,11 @@ const InterviewerScheduleInterview = () => {
       </div>
 
       {/* Select time slot section */}
-      <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow flex flex-col gap-6">
+      <div
+        className={`${
+          inputs.date === "" ? "hidden" : "flex"
+        }  w-full p-6 bg-white border border-gray-200 rounded-lg shadow flex-col gap-6`}
+      >
         <h1>Select an Available Time Slot</h1>
         <div className="flex gap-48 px-8">
           <div>
@@ -229,16 +264,35 @@ const InterviewerScheduleInterview = () => {
             </label>
           </div>
           <div className="grid grid-cols-3 grid-flow-row gap-4 grow">
-            <button
-              type="button"
-              onClick={() => {
-                setInputs({ ...inputs, timeSlot: "09:00" });
-              }}
-              className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
-            >
-              09:00
-            </button>
-            <button
+            {timeSlots.map((timeSlot, index) => (
+              <>
+                {!checkBookedSlot.includes(timeSlot) ? (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => {
+                      setInputs({ ...inputs, timeSlot: timeSlot });
+                    }}
+                    className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  >
+                    {timeSlot}
+                  </button>
+                ) : (
+                  <button
+                    key={index}
+                    disabled
+                    type="button"
+                    // onClick={() => {
+                    //   setInputs({ ...inputs, timeSlot: timeSlot });
+                    // }}
+                    className="text-black hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  >
+                    {timeSlot}
+                  </button>
+                )}
+              </>
+            ))}
+            {/* <button
               type="button"
               onClick={() => {
                 setInputs({ ...inputs, timeSlot: "10:00" });
@@ -309,7 +363,7 @@ const InterviewerScheduleInterview = () => {
               className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
             >
               17:00
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
