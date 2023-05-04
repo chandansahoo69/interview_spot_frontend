@@ -89,11 +89,25 @@ export default class AuthService {
       payload: args,
     });
   }
-  //   static getAnnouncements() {
-  //     return http.get({
-  //       endpoint: "/announcements",
-  //     });
-  //   }
+
+  static getInterviewerName() {
+    return http.get({
+      endpoint: "/interviewer-name",
+    });
+  }
+
+  static getIntervieweeName() {
+    return http.get({
+      endpoint: "/interviewee-name",
+    });
+  }
+
+  static scheduleInterview(args) {
+    return http.post({
+      endpoint: "/scheduleInterview",
+      payload: args,
+    });
+  }
 
   //   static updatePunchIn() {
   //     return http.post({
