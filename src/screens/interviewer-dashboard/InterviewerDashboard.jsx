@@ -1,13 +1,85 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import AuthService from "auth/authService";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const InterviewerDashboard = () => {
+  const { userResponse } = useSelector((state) => state.auth);
+  const [pendingInterviews, setPendingInterviews] = useState([]);
+  const [scheduledInterviews, setScheduledInterviews] = useState([]);
+
+  const getAllPendingInterviews = () => {
+    AuthService.getPendingInterview()
+      .then((response) => {
+        setPendingInterviews(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("pending interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  const getAllScheduledInterviews = () => {
+    AuthService.getScheduledInterview()
+      .then((response) => {
+        setScheduledInterviews(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("pending interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  useEffect(() => {
+    getAllPendingInterviews();
+    getAllScheduledInterviews();
+  }, []);
+
+  const handleAcceptInterview = (id) => {
+    const inputs = {
+      interviewId: id,
+    };
+    console.log("accept", id);
+
+    AuthService.acceptInterview(inputs)
+      .then((response) => {
+        console.log(response);
+        getAllPendingInterviews();
+        getAllScheduledInterviews();
+      })
+      .catch((err) => {
+        console.log("pending interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  const handleRejectInterview = (id) => {
+    const inputs = {
+      interviewId: id,
+      reason: "",
+    };
+    console.log("reject", id);
+    return;
+    AuthService.rejectInterview(inputs)
+      .then((response) => {
+        console.log(response);
+        getAllPendingInterviews();
+      })
+      .catch((err) => {
+        console.log("pending interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1>Dashboard</h1>
         <p className="text-sm text-slate-500">
-          Hello, Chandan! Welcome to Interview Spot
+          Hello, {userResponse?.username}! Welcome to Interview Spot
         </p>
       </div>
       {/* Pending Approval Table */}
@@ -41,114 +113,59 @@ const InterviewerDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Special
-                </th>
-                <td className="px-6 py-4">Subrata Samartha</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">13:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">
-                    Reject
-                  </button>
-                  {/* <button
-                    type="button"
-                    className="focus:outline-none text-white bg-yellow-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-not-allowed"
-                    disabled>
-                    <p className="text-lg font-bold inline mr-2">!</p>
-                    Pending
-                  </button> */}
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Behavioral
-                </th>
-                <td className="px-6 py-4">Nirmalya Prasad Patra</td>
-                <td className="px-6 py-4">10-04-23</td>
-                <td className="px-6 py-4">09:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">
-                    Reject
-                  </button>
-                  {/* <button
-                    type="button"
-                    className="focus:outline-none text-white bg-yellow-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-not-allowed"
-                    disabled>
-                    <p className="text-lg font-bold inline mr-2">!</p>
-                    Pending
-                  </button> */}
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Technical
-                </th>
-                <td className="px-6 py-4">Swity Sweta Gini</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">15:00</td>
-                <td className="px-6 py-4 text-center">
-                  {/* <button
-                    type="button"
-                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">
-                    Reject
-                  </button> */}
-                  <button
-                    type="button"
-                    className="focus:outline-none text-white bg-yellow-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-not-allowed"
-                    disabled>
-                    <p className="text-lg font-bold inline pr-2">!</p>
-                    Pending
-                  </button>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
+              {pendingInterviews.length === 0 && (
+                <span>No Interviews are there.</span>
+              )}
+              {pendingInterviews.map((interview, index) => (
+                <tr className="bg-white border-b" key={index}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {interview?.category}
+                  </th>
+                  <td className="px-6 py-4">{interview?.interviewee}</td>
+                  <td className="px-6 py-4">
+                    {moment(interview?.date).format("DD-MM-YY")}
+                  </td>
+                  <td className="px-6 py-4">{interview?.timeSlot}</td>
+                  <td className="px-6 py-4 text-center">
+                    {userResponse?.userId === interview?.createdBy ? (
+                      <button
+                        type="button"
+                        className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
+                      >
+                        Pending
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => handleAcceptInterview(interview._id)}
+                          type="button"
+                          className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
+                        >
+                          Approve
+                        </button>
+                        <button
+                          onClick={() => handleRejectInterview(interview._id)}
+                          type="button"
+                          className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      View
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -184,78 +201,40 @@ const InterviewerDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Special
-                </th>
-                <td className="px-6 py-4">Subrata Samartha</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">13:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    join now
-                  </button>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Behavioral
-                </th>
-                <td className="px-6 py-4">Nirmalya Prasad Patra</td>
-                <td className="px-6 py-4">10-04-23</td>
-                <td className="px-6 py-4">09:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    join now
-                  </button>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Technical
-                </th>
-                <td className="px-6 py-4">Swity Sweta Gini</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">15:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2">
-                    join now
-                  </button>
-                </td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
+              {scheduledInterviews.length === 0 && (
+                <span>No Interviews are there.</span>
+              )}
+              {scheduledInterviews.map((interview, index) => (
+                <tr className="bg-white border-b" key={index}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {interview.category}
+                  </th>
+                  <td className="px-6 py-4">{interview?.interviewee}</td>
+                  <td className="px-6 py-4">
+                    {moment(interview?.date).format("DD-MM-YY")}
+                  </td>
+                  <td className="px-6 py-4">{interview?.timeSlot}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      type="button"
+                      className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
+                    >
+                      join now
+                    </button>
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      View
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

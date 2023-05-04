@@ -21,7 +21,6 @@ import ViewInterview from "screens/view-interview/ViewInterview";
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
 
-  console.log("first", userResponse);
   return (
     <>
       <Routes>
