@@ -18,7 +18,8 @@ const ProtectedRoute = () => {
   useEffect(() => {
     if (isAuthed && isEmpty(userResponse)) {
       (async () => {
-        const response = dispatch(getCurrentUser());
+        const response = await dispatch(getCurrentUser());
+        console.log("Protected Route", response);
         if (response.meta.requestStatus !== "fulfilled") {
           removeToken({
             name: "token",
@@ -26,7 +27,7 @@ const ProtectedRoute = () => {
           removeToken({
             name: "refresh",
           });
-          //   history(routes.login.path);
+
           history("/login");
         }
       })();

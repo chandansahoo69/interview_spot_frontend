@@ -46,12 +46,49 @@ export default class AuthService {
     });
   }
 
-  //   static getLeaves() {
-  //     return http.get({
-  //       endpoint: "/upcoming-leaves",
-  //     });
-  //   }
+  static getPendingInterview() {
+    return http.get({
+      endpoint: "/pendingInterview",
+    });
+  }
 
+  static getPendingInterviewForInterviewee() {
+    return http.get({
+      endpoint: "/pendingInterview-interviewee",
+    });
+  }
+
+  static getCompletedInterviewForInterviewee() {
+    return http.get({
+      endpoint: "/completedInterview-interviewee",
+    });
+  }
+
+  static getScheduledInterviewForInterviewee() {
+    return http.get({
+      endpoint: "/scheduledInterview-interviewee",
+    });
+  }
+
+  static getScheduledInterview() {
+    return http.get({
+      endpoint: "/scheduledInterview",
+    });
+  }
+
+  static acceptInterview(args) {
+    return http.post({
+      endpoint: "/acceptInterview",
+      payload: args,
+    });
+  }
+
+  static rejectInterview(args) {
+    return http.post({
+      endpoint: "/rejectInterview",
+      payload: args,
+    });
+  }
   //   static getAnnouncements() {
   //     return http.get({
   //       endpoint: "/announcements",
