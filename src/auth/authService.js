@@ -96,6 +96,13 @@ export default class AuthService {
     });
   }
 
+  static getInterviewerBookedSlot(args) {
+    return http.post({
+      endpoint: "/interviewer-slot",
+      payload: args,
+    });
+  }
+
   static getIntervieweeName() {
     return http.get({
       endpoint: "/interviewee-name",

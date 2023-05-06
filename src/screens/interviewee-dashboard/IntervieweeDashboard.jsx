@@ -3,9 +3,11 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const IntervieweeDashboard = () => {
   const { userResponse } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [pendingInterviews, setPendingInterviews] = useState([]);
   const [scheduledInterviews, setScheduledInterviews] = useState([]);
 
@@ -72,6 +74,14 @@ const IntervieweeDashboard = () => {
         console.log("pending interviews err", err);
         toast.error(err?.data?.message);
       });
+  };
+
+  const handleJoinInterview = (id) => {
+    console.log("room id", id, userResponse?.username);
+    const path = `/room/${id}`;
+    navigate(path, {
+      state: { userId: userResponse?.username, roomName: id },
+    });
   };
 
   return (
@@ -220,6 +230,7 @@ const IntervieweeDashboard = () => {
                   <td className="px-6 py-4 text-center">
                     <button
                       type="button"
+                      onClick={() => handleJoinInterview(interview?._id)}
                       className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
                     >
                       join now

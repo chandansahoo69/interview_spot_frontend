@@ -9,6 +9,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import AuthService from "auth/authService";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const timeSlots = [
   "09:00",
@@ -24,6 +25,7 @@ const timeSlots = [
 
 const InterviewerScheduleInterview = () => {
   const { userResponse } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [selected, setSelected] = useState("");
   const [query, setQuery] = useState("");
   const [intervieweeNames, setIntervieweeNames] = useState([]);
@@ -70,7 +72,7 @@ const InterviewerScheduleInterview = () => {
         previousDate.setDate(previousDate.getDate() - 1);
 
         if (
-          previousDate.toLocaleDateString() ===
+          new Date(slot?.date).toLocaleDateString() ===
           new Date(inputs?.date).toLocaleDateString()
         ) {
           console.log("matched slot", slot);
@@ -95,6 +97,8 @@ const InterviewerScheduleInterview = () => {
       .then((response) => {
         console.log(response);
         toast.success(response?.message);
+        // navigate({ pathname: `${userResponse?.role}/dashboard` });
+        setInputs(initialState);
       })
       .catch((err) => {
         console.log("schedule interview err", err);
@@ -198,11 +202,14 @@ const InterviewerScheduleInterview = () => {
                   afterLeave={() => setQuery("")}
                 >
                   <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {filteredPeople.length === 0 && query !== "" ? (
+                    {filteredPeople &&
+                    filteredPeople.length === 0 &&
+                    query !== "" ? (
                       <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                         Nothing found.
                       </div>
                     ) : (
+                      filteredPeople &&
                       filteredPeople.map((person) => (
                         <Combobox.Option
                           key={person.id}

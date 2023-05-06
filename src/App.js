@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import "styles/room.css";
 import UnAuthRoute from "screens/routes/un-auth-route/UnAuthRoute";
 import ProtectedRoute from "screens/routes/protected-route/ProtectedRoute";
 import IntervieweeDashboard from "screens/interviewee-dashboard/IntervieweeDashboard";
@@ -17,6 +18,8 @@ import IntervieweeScheduleInterview from "screens/interviewee-schedule-interview
 import IntervieweeCompletedInterview from "screens/interviewee-completed-interview/IntervieweeCompletedInterview";
 import Feedback from "screens/feedback/Feedback";
 import ViewInterview from "screens/view-interview/ViewInterview";
+import TestingRoom from "screens/room/TestingRoom";
+import Room from "screens/room/Room";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -75,6 +78,8 @@ function App() {
               path="interviewee/completed-interview"
               element={<IntervieweeCompletedInterview />}
             />
+            {/* agora room testing */}
+            <Route path="/room/:id" element={<Room />} />
 
             {lodash.isEmpty(userResponse) && (
               <Route
