@@ -1,6 +1,57 @@
-import React from "react";
+import AuthService from "auth/authService";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Feedback = () => {
+  const { state } = useLocation();
+  const { userResponse } = useSelector((state) => state.auth);
+  const [interviewDetails, setInterviewDetails] = useState({});
+  const initialState = {
+    id: "",
+    punctuality: "",
+    communicationSkill: "",
+    professionalism: "",
+    technicalSkill: "",
+    problemSolvingSkill: "",
+    additionalComment: "",
+  };
+  const [inputs, setInputs] = useState(initialState);
+
+  useEffect(() => {
+    const inputs = {
+      id: state.interview,
+    };
+
+    AuthService.getInterviewDetails(inputs)
+      .then((response) => {
+        setInterviewDetails(response?.interview);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("pending interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  }, []);
+
+  const handleSubmit = () => {
+    inputs.id = state.interview;
+    console.log(inputs);
+    AuthService.postFeedback(inputs)
+      .then((response) => {
+        console.log(response);
+        toast.success(response?.message);
+        window.location.href = `http://localhost:3000/${userResponse.role}/dashboard`;
+      })
+      .catch((err) => {
+        console.log("feedback err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  console.log("inside feedback", state);
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -15,20 +66,22 @@ const Feedback = () => {
           <div className="px-8 grid grid-cols-1 gap-2">
             <div className="grid grid-cols-3 text-sm">
               <p className="font-normal ">Interviewee Name</p>
-              <p className="col-span-2">Subrata Samartha</p>
+              <p className="col-span-2">{interviewDetails?.interviewee}</p>
             </div>
             <div className="grid grid-cols-3 text-sm">
               <p className="font-normal ">Interviewer Name</p>
-              <p className="col-span-2">Chandan Sahoo</p>
+              <p className="col-span-2">{interviewDetails?.interviewer}</p>
             </div>
             <div className="grid grid-cols-3 text-sm">
               <p className="font-normal ">Date & Time</p>
-              <p className="">23-04-23</p>
-              <p className="">17:00</p>
+              <p className="">
+                {moment(interviewDetails?.date).format("DD-MM-YY")}
+              </p>
+              <p className="">{interviewDetails?.timeSlot}</p>
             </div>
             <div className="grid grid-cols-3 text-sm">
               <p className="font-normal ">Interview Type</p>
-              <p className="col-span-2">Behavioral</p>
+              <p className="col-span-2">{interviewDetails?.category}</p>
             </div>
           </div>
         </div>
@@ -36,331 +89,276 @@ const Feedback = () => {
       </div>
       {/* Feedback Form */}
       <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-        <form>
+        <div>
           <div>
             {/* Punctuality rating */}
             <fieldset className="flex gap-4">
               <label
                 for=""
-                class="w-[150px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[150px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Punctuality :
               </label>
 
               <div class="flex items-center mb-4">
-                <input
-                  id="punctuality-option-1"
-                  type="radio"
-                  name="punctuality-ratings"
-                  value="Poor"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="punctuality-option-1"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, punctuality: "poor" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Poor
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="punctuality-option-2"
-                  type="radio"
-                  name="punctuality-ratings"
-                  value="fair"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="punctuality-option-2"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, punctuality: "fair" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Fair
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="punctuality-option-3"
-                  type="radio"
-                  name="punctuality-ratings"
-                  value="good"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 "
-                />
-                <label
-                  for="punctuality-option-3"
-                  class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, punctuality: "good" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Good
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="punctuality-option-4"
-                  type="radio"
-                  name="punctuality-ratings"
-                  value="Excellent"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 "
-                />
-                <label
-                  for="punctuality-option-4"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, punctuality: "excellent" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Excellent
-                </label>
+                </button>
               </div>
             </fieldset>
             {/* Communication skill rating */}
             <fieldset className="flex gap-4">
               <label
                 for=""
-                class="w-[150px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[150px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Communication Skill :
               </label>
 
               <div class="flex items-center mb-4">
-                <input
-                  id="cummunication-option-1"
-                  type="radio"
-                  name="communication-ratings"
-                  value="Poor"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="communication-option-1"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, communicationSkill: "poor" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Poor
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="communication-option-2"
-                  type="radio"
-                  name="communication-ratings"
-                  value="fair"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="communication-option-2"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, communicationSkill: "fair" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Fair
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="communication-option-3"
-                  type="radio"
-                  name="communication-ratings"
-                  value="good"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 "
-                />
-                <label
-                  for="communication-option-3"
-                  class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, communicationSkill: "good" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Good
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="communication-option-4"
-                  type="radio"
-                  name="communication-ratings"
-                  value="Excellent"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 "
-                />
-                <label
-                  for="communication-option-4"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, communicationSkill: "excellent" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Excellent
-                </label>
+                </button>
               </div>
             </fieldset>
             {/* Proffesionalism rating */}
             <fieldset className="flex gap-4">
               <label
                 for=""
-                class="w-[150px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[150px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Proffesionalism :
               </label>
 
               <div class="flex items-center mb-4">
-                <input
-                  id="proffesionalism-option-1"
-                  type="radio"
-                  name="proffesionalism-ratings"
-                  value="Poor"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="proffesionalism-option-1"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, professionalism: "poor" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Poor
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="proffesionalism-option-2"
-                  type="radio"
-                  name="proffesionalism-ratings"
-                  value="fair"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="proffesionalism-option-2"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, professionalism: "fair" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Fair
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="proffesionalism-option-3"
-                  type="radio"
-                  name="proffesionalism-ratings"
-                  value="good"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 "
-                />
-                <label
-                  for="proffesionalism-option-3"
-                  class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, professionalism: "good" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Good
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="proffesionalism-option-4"
-                  type="radio"
-                  name="proffesionalism-ratings"
-                  value="Excellent"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 "
-                />
-                <label
-                  for="proffesionalism-option-4"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, professionalism: "excellent" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Excellent
-                </label>
+                </button>
               </div>
             </fieldset>
             {/* Technical Skill rating */}
             <fieldset className="flex gap-4">
               <label
                 for=""
-                class="w-[150px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[150px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Technical Skill :
               </label>
 
               <div class="flex items-center mb-4">
-                <input
-                  id="technical-option-1"
-                  type="radio"
-                  name="technical-ratings"
-                  value="Poor"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="technical-option-1"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, technicalSkill: "poor" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Poor
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="technical-option-2"
-                  type="radio"
-                  name="technical-ratings"
-                  value="fair"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="technical-option-2"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, technicalSkill: "fair" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Fair
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="technical-option-3"
-                  type="radio"
-                  name="technical-ratings"
-                  value="good"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 "
-                />
-                <label
-                  for="technical-option-3"
-                  class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, technicalSkill: "good" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Good
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="technical-option-4"
-                  type="radio"
-                  name="technical-ratings"
-                  value="Excellent"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 "
-                />
-                <label
-                  for="technical-option-4"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, technicalSkill: "excellent" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Excellent
-                </label>
+                </button>
               </div>
             </fieldset>
             {/* Problem Solving Skill rating */}
             <fieldset className="flex gap-4">
               <label
                 for=""
-                class="w-[150px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[150px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Problem Solving Skill :
               </label>
 
               <div class="flex items-center mb-4">
-                <input
-                  id="prolem-solving-option-1"
-                  type="radio"
-                  name="prolem-solving-ratings"
-                  value="Poor"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="prolem-solving-option-1"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, problemSolvingSkill: "poor" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Poor
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="prolem-solving-option-2"
-                  type="radio"
-                  name="prolem-solving-ratings"
-                  value="fair"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
-                />
-                <label
-                  for="prolem-solving-option-2"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, problemSolvingSkill: "fair" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Fair
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="prolem-solving-option-3"
-                  type="radio"
-                  name="prolem-solving-ratings"
-                  value="good"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 "
-                />
-                <label
-                  for="prolem-solving-option-3"
-                  class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, problemSolvingSkill: "good" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Good
-                </label>
+                </button>
               </div>
               <div class="flex items-center mb-4">
-                <input
-                  id="prolem-solving-option-4"
-                  type="radio"
-                  name="prolem-solving-ratings"
-                  value="Excellent"
-                  class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 "
-                />
-                <label
-                  for="prolem-solving-option-4"
-                  class="block ml-2 text-sm font-medium text-gray-900">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInputs({ ...inputs, problemSolvingSkill: "excellent" });
+                  }}
+                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                >
                   Excellent
-                </label>
+                </button>
               </div>
             </fieldset>
           </div>
@@ -368,22 +366,30 @@ const Feedback = () => {
             <div className="flex">
               <label
                 for=""
-                class="w-[200px] ml-2 text-sm font-medium text-gray-900 ">
+                class="w-[200px] ml-2 text-sm font-medium text-gray-900 "
+              >
                 Message :
               </label>
               <textarea
-                id="message"
+                id="additionalComment"
                 rows="4"
+                name="additionalComment"
+                value={inputs.additionalComment}
+                onChange={(e) => {
+                  setInputs({ ...inputs, additionalComment: e.target.value });
+                }}
                 class="p-2.5 w-full h-[240px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Write your additional feedback here..."></textarea>
+                placeholder="Write your additional feedback here..."
+              ></textarea>
             </div>
           </fieldset>
           <button
-            type="submit"
-            class="text-white bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+            onClick={handleSubmit}
+            class="text-white bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          >
             Submit
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

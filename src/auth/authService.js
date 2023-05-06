@@ -116,6 +116,20 @@ export default class AuthService {
     });
   }
 
+  static getInterviewDetails(args) {
+    return http.post({
+      endpoint: "/interview-details",
+      payload: args,
+    });
+  }
+
+  static postFeedback(args) {
+    return http.post({
+      endpoint: "/post-feedback",
+      payload: args,
+    });
+  }
+
   //   static updatePunchIn() {
   //     return http.post({
   //       endpoint: "/punch-in",

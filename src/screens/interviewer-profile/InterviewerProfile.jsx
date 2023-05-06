@@ -4,15 +4,19 @@ import { MdEmail } from "react-icons/md";
 import { BsTelephoneFill } from "react-icons/bs";
 import { ImLinkedin } from "react-icons/im";
 import { AiFillEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const InterviewerProfile = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4 items-center">
       <div className="w-[640px] flex justify-between">
         <h1>My Profile</h1>
         <button
+          onClick={() => navigate("edit")}
           type="button"
-          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 flex gap-1 items-center">
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 flex gap-1 items-center"
+        >
           <AiFillEdit />
           Edit
         </button>
@@ -54,7 +58,8 @@ const InterviewerProfile = () => {
             </div>
             <button
               type="button"
-              class="w-full text-white bg-[#0a66c2] hover:bg-[#0a66c2]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 items-center mr-2 mb-2 flex justify-center gap-2 mt-2">
+              class="w-full text-white bg-[#0a66c2] hover:bg-[#0a66c2]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 items-center mr-2 mb-2 flex justify-center gap-2 mt-2"
+            >
               <ImLinkedin />
               Linkedin
             </button>

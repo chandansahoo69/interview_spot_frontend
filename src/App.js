@@ -20,6 +20,7 @@ import Feedback from "screens/feedback/Feedback";
 import ViewInterview from "screens/view-interview/ViewInterview";
 import TestingRoom from "screens/room/TestingRoom";
 import Room from "screens/room/Room";
+import InterviewerProfileEdit from "screens/interviewer-profile-edit/InterviewerProfileEdit";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -49,7 +50,7 @@ function App() {
               path="interviewer/completed-interview"
               element={<InterviewerCompletedInterview />}
             />
-            <Route path="interviewer/feedback" element={<Feedback />} />
+            <Route path="feedback" element={<Feedback />} />
             <Route
               path="interviewer/view-interview"
               element={<ViewInterview />}
@@ -61,6 +62,14 @@ function App() {
             <Route
               path="interviewer/profile/:id"
               element={<InterviewerProfile />}
+            />
+            <Route
+              path="interviewer/profile/:id/edit"
+              element={<InterviewerProfileEdit />}
+            />
+            <Route
+              path="interviewee/profile/:id/edit"
+              element={<InterviewerProfileEdit />}
             />
             <Route
               path="interviewee/profile/:id"

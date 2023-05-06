@@ -2,11 +2,14 @@ import React from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
-import { json, useLocation } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import AgoraRTM from "agora-rtm-sdk";
+import { useSelector } from "react-redux";
 
 const Room = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
+  const { userResponse } = useSelector((state) => state.auth);
   const [toggleCameraClass, setToggleCameraClass] = useState(true);
   const [toggleMicClass, setToggleMicClass] = useState(true);
   const [toggleScreenClass, setToggleScreenClass] = useState(false);
@@ -155,6 +158,14 @@ const Room = () => {
   let leaveChannel = async () => {
     await channel.leave();
     await rtmClient.logout();
+  };
+
+  let leaveChannelManually = async () => {
+    await channel.leave();
+    await rtmClient.logout();
+    navigate("/feedback", {
+      state: { userId: userResponse?.username, interview: state.roomName },
+    });
   };
 
   useEffect(() => {
@@ -512,7 +523,7 @@ const Room = () => {
                   <path d="M0 1v17h24v-17h-24zm22 15h-20v-13h20v13zm-6.599 4l2.599 3h-12l2.599-3h6.802z" />
                 </svg>
               </button>
-              <button id="leave-btn">
+              <button onClick={leaveChannelManually} id="leave-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
