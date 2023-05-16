@@ -136,6 +136,7 @@ const IntervieweeCompletedInterview = () => {
                 <th scope="col" className="px-6 py-3">
                   Time
                 </th>
+
                 <th scope="col" className="px-6 py-3 text-center"></th>
               </tr>
             </thead>
