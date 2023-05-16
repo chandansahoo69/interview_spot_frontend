@@ -21,6 +21,7 @@ import ViewInterview from "screens/view-interview/ViewInterview";
 import TestingRoom from "screens/room/TestingRoom";
 import Room from "screens/room/Room";
 import InterviewerProfileEdit from "screens/interviewer-profile-edit/InterviewerProfileEdit";
+import RoutePage from "screens/route-page/RoutePage";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -87,15 +88,16 @@ function App() {
               path="interviewee/completed-interview"
               element={<IntervieweeCompletedInterview />}
             />
-            {/* agora room testing */}
-            <Route path="/room/:id" element={<Room />} />
 
             {lodash.isEmpty(userResponse) && (
+              <Route path="/" element={<Navigate replace to="/dashboard" />} />
+            )}
+            {/* {lodash.isEmpty(userResponse) && (
               <Route
                 path="/"
                 element={<Navigate replace to="/interviewer/dashboard" />}
               />
-            )}
+            )} */}
             <Route
               path="/"
               element={
@@ -103,6 +105,10 @@ function App() {
               }
             />
           </Route>
+        </Route>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/room/:id" element={<Room />} />
+          <Route path="/dashboard" element={<RoutePage />} />
         </Route>
       </Routes>
     </>

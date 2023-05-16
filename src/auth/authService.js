@@ -64,6 +64,12 @@ export default class AuthService {
     });
   }
 
+  static getCompletedInterviewForInterviewer() {
+    return http.get({
+      endpoint: "/completedInterview",
+    });
+  }
+
   static getScheduledInterviewForInterviewee() {
     return http.get({
       endpoint: "/scheduledInterview-interviewee",
@@ -123,10 +129,29 @@ export default class AuthService {
     });
   }
 
+  static markInterviewCompleted(args) {
+    return http.post({
+      endpoint: "/mark-interview-completed",
+      payload: args,
+    });
+  }
+
   static postFeedback(args) {
     return http.post({
       endpoint: "/post-feedback",
       payload: args,
+    });
+  }
+
+  static pendingFeedbacksForInterviewer() {
+    return http.get({
+      endpoint: "/pending-feedbacks",
+    });
+  }
+
+  static pendingFeedbacksForInterviewee() {
+    return http.get({
+      endpoint: "/pending-feedbacks-interviewee",
     });
   }
 

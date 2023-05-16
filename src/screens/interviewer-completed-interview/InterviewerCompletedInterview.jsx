@@ -1,7 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import AuthService from "auth/authService";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const InterviewerCompletedInterview = () => {
+  const navigate = useNavigate();
+  const [completedInterviews, setCompletedInterviews] = useState([]);
+  const [pendingFeedbacks, setPendingFeedbacks] = useState([]);
+
+  const getAllCompletedInterviews = () => {
+    AuthService.getCompletedInterviewForInterviewer()
+      .then((response) => {
+        setCompletedInterviews(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("completed interviews err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  const getAllPendingFeedbacks = () => {
+    AuthService.pendingFeedbacksForInterviewer()
+      .then((response) => {
+        setPendingFeedbacks(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("pending feedbacks err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  useEffect(() => {
+    getAllPendingFeedbacks();
+    getAllCompletedInterviews();
+  }, []);
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -41,57 +78,37 @@ const InterviewerCompletedInterview = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Special
-                </th>
-                <td className="px-6 py-4">Subrata Samartha</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">13:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-pointer">
-                    feedback
-                  </button>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Behavioral
-                </th>
-                <td className="px-6 py-4">Nirmalya Prasad Patra</td>
-                <td className="px-6 py-4">10-04-23</td>
-                <td className="px-6 py-4">09:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-pointer">
-                    feedback
-                  </button>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Technical
-                </th>
-                <td className="px-6 py-4">Swity Sweta Gini</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">15:00</td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none text-black bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-pointer">
-                    feedback
-                  </button>
-                </td>
-              </tr>
+              {pendingFeedbacks.length === 0 && (
+                <span>No pending feedbacks are there.</span>
+              )}
+              {pendingFeedbacks.map((feedback, index) => (
+                <tr className="bg-white border-b" key={index}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {feedback.category}
+                  </th>
+                  <td className="px-6 py-4">{feedback?.interviewee}</td>
+                  <td className="px-6 py-4">
+                    {moment(feedback?.date).format("DD-MM-YY")}
+                  </td>
+                  <td className="px-6 py-4">{feedback?.timeSlot}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() =>
+                        navigate("/feedback", {
+                          state: { interview: feedback._id },
+                        })
+                      }
+                      type="button"
+                      className="focus:outline-none text-black bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 cursor-pointer"
+                    >
+                      feedback
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -124,57 +141,32 @@ const InterviewerCompletedInterview = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Special
-                </th>
-                <td className="px-6 py-4">Subrata Samartha</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">13:00</td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Behavioral
-                </th>
-                <td className="px-6 py-4">Nirmalya Prasad Patra</td>
-                <td className="px-6 py-4">10-04-23</td>
-                <td className="px-6 py-4">09:00</td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
-              <tr className="bg-white border-b">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  Technical
-                </th>
-                <td className="px-6 py-4">Swity Sweta Gini</td>
-                <td className="px-6 py-4">23-04-23</td>
-                <td className="px-6 py-4">15:00</td>
-                <td class="px-6 py-4 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    View
-                  </a>
-                </td>
-              </tr>
+              {completedInterviews.length === 0 && (
+                <span>No Interviews are there.</span>
+              )}
+              {completedInterviews.map((interview, index) => (
+                <tr className="bg-white border-b" key={index}>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {interview.category}
+                  </th>
+                  <td className="px-6 py-4">{interview?.interviewee}</td>
+                  <td className="px-6 py-4">
+                    {moment(interview?.date).format("DD-MM-YY")}
+                  </td>
+                  <td className="px-6 py-4">{interview?.timeSlot}</td>
+                  <td class="px-6 py-4 text-center">
+                    <a
+                      href="#"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      View
+                    </a>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

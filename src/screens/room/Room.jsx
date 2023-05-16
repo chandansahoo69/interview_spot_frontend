@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import AgoraRTM from "agora-rtm-sdk";
 import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import AuthService from "auth/authService";
 
 const Room = () => {
   const navigate = useNavigate();
@@ -160,12 +162,68 @@ const Room = () => {
     await rtmClient.logout();
   };
 
+  let leaveStream = async (e) => {
+    e.preventDefault();
+
+    document.getElementsByClassName("stream__actions")[0].style.display =
+      "none";
+
+    for (let i = 0; localTracks.length > i; i++) {
+      localTracks[i].stop();
+      localTracks[i].close();
+    }
+
+    await client.unpublish([localTracks[0], localTracks[1]]);
+
+    if (localScreenTracks) {
+      await client.unpublish([localScreenTracks]);
+    }
+
+    document.getElementById(`user-container-${uid}`).remove();
+
+    if (userIdInDisplayFrame === `user-container-${uid}`) {
+      displayFrame.style.display = null;
+
+      for (let i = 0; videoFrames.length > i; i++) {
+        videoFrames[i].style.height = "300px";
+        videoFrames[i].style.width = "300px";
+      }
+    }
+
+    channel.sendMessage({
+      text: JSON.stringify({ type: "user_left", uid: uid }),
+    });
+  };
+
   let leaveChannelManually = async () => {
     await channel.leave();
     await rtmClient.logout();
-    navigate("/feedback", {
-      state: { userId: userResponse?.username, interview: state.roomName },
-    });
+
+    const obj = {
+      id: state.roomName,
+    };
+
+    console.log("manually leave channel", obj);
+
+    AuthService.markInterviewCompleted(obj)
+      .then((response) => {
+        console.log(response);
+        toast.success(response?.message);
+        if (userResponse.role === "interviewer") {
+          navigate("/feedback", {
+            state: {
+              userId: userResponse?.username,
+              interview: state.roomName,
+            },
+          });
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log("pending feedbacks err", err);
+        toast.error(err?.data?.message);
+      });
   };
 
   useEffect(() => {
@@ -418,6 +476,7 @@ const Room = () => {
     document
       .getElementById("screen-btn")
       .addEventListener("click", toggleScreen);
+    document.getElementById("leave-btn").addEventListener("click", leaveStream);
   }, []);
 
   return (
@@ -523,7 +582,10 @@ const Room = () => {
                   <path d="M0 1v17h24v-17h-24zm22 15h-20v-13h20v13zm-6.599 4l2.599 3h-12l2.599-3h6.802z" />
                 </svg>
               </button>
-              <button onClick={leaveChannelManually} id="leave-btn">
+              <button
+                //   onClick={leaveChannelManually}
+                id="leave-btn"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
