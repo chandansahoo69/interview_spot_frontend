@@ -22,6 +22,7 @@ import TestingRoom from "screens/room/TestingRoom";
 import Room from "screens/room/Room";
 import InterviewerProfileEdit from "screens/interviewer-profile-edit/InterviewerProfileEdit";
 import RoutePage from "screens/route-page/RoutePage";
+import IntervieweeProfileEdit from "screens/interviewee-profile-edit/IntervieweeProfileEdit";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -53,11 +54,11 @@ function App() {
             />
             <Route path="feedback" element={<Feedback />} />
             <Route
-              path="interviewer/view-interview"
+              path="interviewer/view-interview/:id"
               element={<ViewInterview />}
             />
             <Route
-              path="interviewee/view-interview"
+              path="interviewee/view-interview/:id"
               element={<ViewInterview />}
             />
             <Route
@@ -70,7 +71,7 @@ function App() {
             />
             <Route
               path="interviewee/profile/:id/edit"
-              element={<InterviewerProfileEdit />}
+              element={<IntervieweeProfileEdit />}
             />
             <Route
               path="interviewee/profile/:id"

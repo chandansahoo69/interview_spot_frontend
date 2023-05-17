@@ -39,6 +39,10 @@ const InterviewerCompletedInterview = () => {
     getAllCompletedInterviews();
   }, []);
 
+  const handleClick = (id) => {
+    window.location.href = `http://localhost:3000/interviewer/view-interview/${id}`;
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -158,12 +162,12 @@ const InterviewerCompletedInterview = () => {
                   </td>
                   <td className="px-6 py-4">{interview?.timeSlot}</td>
                   <td class="px-6 py-4 text-center">
-                    <a
-                      href="#"
+                    <button
+                      onClick={() => handleClick(interview._id)}
                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       View
-                    </a>
+                    </button>
                   </td>
                 </tr>
               ))}

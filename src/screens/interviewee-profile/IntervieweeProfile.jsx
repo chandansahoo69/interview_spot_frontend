@@ -6,12 +6,12 @@ import { FaHome } from "react-icons/fa";
 import { AiOutlineEdit } from "react-icons/ai";
 import AuthService from "auth/authService";
 import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment/moment";
 
 const IntervieweeProfile = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const IntervieweeProfile = () => {
               <h1>Work experiences / Internships</h1>
               {user?.experience?.map((experience) => (
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-md">{experience?.description}</h2>
+                  <h2 className="text-md">{experience?.position}</h2>
                   <h2 className="inline text-sm">{experience?.name}</h2>
                   <p className="text-sm text-slate-500 font-normal">
                     {moment(experience?.startDate).format("MMMM YYYY")} -{" "}
@@ -88,14 +88,7 @@ const IntervieweeProfile = () => {
                     (2 months)
                   </p>
                   <p className="text-sm font-normal text-justify">
-                    Apptomanage andcategorize expenses.ImplementsMicrosoft’s
-                    Oxford OpitcalCharacter Recognition API. Pie charts show
-                    spending distribution. Apptomanage andcategorize
-                    expenses.ImplementsMicrosoft’s Oxford OpitcalCharacter
-                    Recognition API. Pie charts show spending distribution.
-                    Apptomanage andcategorize expenses.ImplementsMicrosoft’s
-                    Oxford OpitcalCharacter Recognition API. Pie charts show
-                    spending distribution.
+                    {experience?.description}
                   </p>
                 </div>
               ))}
@@ -142,9 +135,7 @@ const IntervieweeProfile = () => {
               <h1>Education</h1>
               {user?.education?.map((education) => (
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-md">
-                    Bachelors of Technology in Computer Science and Engineering
-                  </h2>
+                  <h2 className="text-md">{education?.course}</h2>
                   <h2 className="inline text-sm">{education?.name}</h2>
                   <p className="text-sm text-slate-500 font-normal">
                     2019 - 2023
@@ -226,7 +217,10 @@ const IntervieweeProfile = () => {
               </div>
             </div>
           </div>
-          <button className="min-w-[280px] py-2 bg-slate-500 text-sm rounded-lg shadow-sm text-white hover:bg-slate-400 hover:text-white flex items-center justify-center gap-2">
+          <button
+            onClick={() => navigate("edit")}
+            className="min-w-[280px] py-2 bg-slate-500 text-sm rounded-lg shadow-sm text-white hover:bg-slate-400 hover:text-white flex items-center justify-center gap-2"
+          >
             <AiOutlineEdit className="text-lg" />
             Edit
           </button>

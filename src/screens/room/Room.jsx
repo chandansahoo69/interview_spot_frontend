@@ -193,11 +193,6 @@ const Room = () => {
     channel.sendMessage({
       text: JSON.stringify({ type: "user_left", uid: uid }),
     });
-  };
-
-  let leaveChannelManually = async () => {
-    await channel.leave();
-    await rtmClient.logout();
 
     const obj = {
       id: state.roomName,

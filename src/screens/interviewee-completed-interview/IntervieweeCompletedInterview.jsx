@@ -38,6 +38,10 @@ const IntervieweeCompletedInterview = () => {
     getAllCompletedInterviews();
   }, []);
 
+  const handleClick = (id) => {
+    window.location.href = `http://localhost:3000/interviewee/view-interview/${id}`;
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -48,7 +52,7 @@ const IntervieweeCompletedInterview = () => {
         </p>
       </div>
       {/* Pending Feedback Table */}
-      <div className="w-full bg-white border border-gray-200 rounded-lg shadow flex flex-col">
+      {/* <div className="w-full bg-white border border-gray-200 rounded-lg shadow flex flex-col">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 ">
             <caption className="p-5 text-lg font-semibold text-left  bg-white ">
@@ -111,7 +115,7 @@ const IntervieweeCompletedInterview = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
       {/* Completed Interview Table */}
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow flex flex-col">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -158,12 +162,12 @@ const IntervieweeCompletedInterview = () => {
                   </td>
                   <td className="px-6 py-4">{interview?.timeSlot}</td>
                   <td class="px-6 py-4 text-center">
-                    <a
-                      href="#"
+                    <button
+                      onClick={() => handleClick(interview._id)}
                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       View
-                    </a>
+                    </button>
                   </td>
                 </tr>
               ))}
