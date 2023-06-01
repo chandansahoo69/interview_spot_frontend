@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { MdDeleteForever } from "react-icons/md";
+import profileImage from "assets/images/profile-female.jpg";
 
 const IntervieweeProfileEdit = () => {
   const [inputs, setInputs] = useState({
@@ -209,20 +210,25 @@ const IntervieweeProfileEdit = () => {
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <form action="#">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-              <div class="sm:col-span-2">
-                <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Type product name"
-                  required=""
+              <div class="sm:col-span-2 flex items-end gap-5">
+                <img
+                  class="rounded w-36 h-36"
+                  src={profileImage}
+                  alt="Extra large avatar"
                 />
+
+                <div className="w-full">
+                  <label
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    for="image-input">
+                    Upload file
+                  </label>
+                  <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="image-input"
+                    type="file"
+                  />
+                </div>
               </div>
               <div class="w-full">
                 <label
@@ -315,6 +321,45 @@ const IntervieweeProfileEdit = () => {
                   required=""
                 />
               </div>
+              <div className="col-span-2">
+                <label
+                  for="github"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Github URL
+                </label>
+                <input
+                  type="url"
+                  id="github"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Github.com"
+                />
+              </div>
+              <div className="col-span-2">
+                <label
+                  for="linkedin"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Linkedin URL
+                </label>
+                <input
+                  type="url"
+                  id="linkedin"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="linkedin.com"
+                />
+              </div>
+              <div className="col-span-2">
+                <label
+                  for="portfolio"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Portfolio URL
+                </label>
+                <input
+                  type="url"
+                  id="portfolio"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="personal-website.com"
+                />
+              </div>
               <div class="sm:col-span-2">
                 <label
                   for="address"
@@ -331,7 +376,7 @@ const IntervieweeProfileEdit = () => {
             <button
               type="submit"
               class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-lime-200 rounded-lg focus:ring-4 focus:ring-primary-200">
-              Save
+              Save General Information
             </button>
           </form>
         </div>
@@ -990,7 +1035,7 @@ const IntervieweeProfileEdit = () => {
             <button
               type="submit"
               className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-lime-200 rounded-lg focus:ring-4 focus:ring-primary-200">
-              Save
+              Save Candidate Information
             </button>
           </form>
         </div>
