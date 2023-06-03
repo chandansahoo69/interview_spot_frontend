@@ -33,6 +33,7 @@ function App() {
         <Route element={<UnAuthRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/landing-page" element={<Feedback />} />
         </Route>
         <Route path="/" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
