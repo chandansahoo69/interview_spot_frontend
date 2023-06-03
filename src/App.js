@@ -24,6 +24,7 @@ import Room from "screens/room/Room";
 import InterviewerProfileEdit from "screens/interviewer-profile-edit/InterviewerProfileEdit";
 import RoutePage from "screens/route-page/RoutePage";
 import IntervieweeProfileEdit from "screens/interviewee-profile-edit/IntervieweeProfileEdit";
+import LandingPage from "screens/landing-page/LandingPage";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -31,10 +32,10 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/landing-page" element={<LandingPage />} />
         <Route element={<UnAuthRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/landing-page" element={<Feedback />} />
         </Route>
         <Route path="/" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
