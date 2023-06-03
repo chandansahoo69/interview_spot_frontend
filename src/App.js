@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "styles/room.css";
+import "styles/main.css";
 import UnAuthRoute from "screens/routes/un-auth-route/UnAuthRoute";
 import ProtectedRoute from "screens/routes/protected-route/ProtectedRoute";
 import IntervieweeDashboard from "screens/interviewee-dashboard/IntervieweeDashboard";
