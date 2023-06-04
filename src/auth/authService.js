@@ -143,6 +143,20 @@ export default class AuthService {
     });
   }
 
+  static updateInterviewerProfile(args) {
+    return http.post({
+      endpoint: "/updateProfile",
+      payload: args,
+    });
+  }
+
+  static updateIntervieweeProfile(args) {
+    return http.post({
+      endpoint: "/updateProfile",
+      payload: args,
+    });
+  }
+
   static pendingFeedbacksForInterviewer() {
     return http.get({
       endpoint: "/pending-feedbacks",

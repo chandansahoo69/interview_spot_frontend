@@ -1,7 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import profileImage from "assets/images/profile-female.jpg";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import AuthService from "auth/authService";
+import { toast } from "react-hot-toast";
 
 const InterviewerProfileEdit = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const a = location.pathname.split("/");
+
+  const id = a[a.length - 2];
+  const [user, setUser] = useState({});
+  const [input, setInput] = useState({
+    phone: "",
+    username: "",
+    gender: "",
+    linkedIn: "",
+    department: "",
+  });
+
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    console.log(input);
+    AuthService.updateInterviewerProfile(input)
+      .then((response) => {
+        toast.success(response?.message);
+        console.log(response);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log("Interviewer Profile edit err", err);
+        toast.error(err?.data?.message);
+      });
+  };
+
+  useEffect(() => {
+    AuthService.getInterviewerProfile(id)
+      .then((response) => {
+        const obj = {
+          phone: response.phone,
+          email: response.userId.email,
+          username: response.userId.username,
+          gender: response.gender,
+          linkedIn: response.linkedIn,
+          department: response.department,
+        };
+        setInput(obj);
+        setUser(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("Interviewer Profile edit err", err);
+        toast.error(err?.data?.message);
+      });
+  }, []);
+
   return (
     <>
       <section class="bg-white rounded-lg shadow-sm">
@@ -9,7 +65,7 @@ const InterviewerProfileEdit = () => {
           General Information
         </h2>
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-          <form action="#">
+          <div>
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div class="sm:col-span-2 flex items-end gap-5">
                 <img
@@ -21,7 +77,8 @@ const InterviewerProfileEdit = () => {
                 <div className="w-full">
                   <label
                     class="block mb-2 text-sm font-medium text-gray-900"
-                    for="image-input">
+                    for="image-input"
+                  >
                     Upload file
                   </label>
                   <input
@@ -31,87 +88,86 @@ const InterviewerProfileEdit = () => {
                   />
                 </div>
               </div>
-              <div class="w-full">
+              <div class="sm:col-span-2">
                 <label
-                  for="first_name"
-                  class="block mb-2 text-sm font-medium text-gray-900">
-                  First Name
+                  for="username"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  User Name
                 </label>
                 <input
                   type="text"
-                  name="firstName"
-                  id="first_name"
+                  name="username"
+                  id="username"
+                  value={input.username}
+                  onChange={(e) => handleChange(e)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Enter first name"
-                  required=""
+                  placeholder="Enter User name"
+                  required
                 />
               </div>
-              <div class="w-full">
-                <label
-                  for="last-name"
-                  class="block mb-2 text-sm font-medium text-gray-900">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                  placeholder="Enter last name"
-                  required=""
-                />
-              </div>
+
               <div class="sm:col-span-2">
                 <label
                   for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900">
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >
                   Email
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
+                  value={input.email}
+                  onChange={(e) => handleChange(e)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Enter your email address"
-                  required=""
+                  required
                 />
               </div>
               <div class="sm:col-span-2">
                 <label
-                  for="phone-number"
-                  class="block mb-2 text-sm font-medium text-gray-900">
+                  for="phone"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >
                   Phone/Mobile No.
                 </label>
                 <input
                   type="tel"
-                  name="phone-number"
-                  id="phone-number"
+                  name="phone"
+                  id="phone"
+                  value={input.phone}
+                  onChange={(e) => handleChange(e)}
                   pattern="[0-9]{10}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Enter your phone/mobile"
-                  required=""
+                  required
                 />
               </div>
               <div className="col-span-2">
                 <label
                   for="linkedin"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Linkedin URL
                 </label>
                 <input
                   type="url"
                   id="linkedin"
+                  value={input.linkedIn}
+                  onChange={(e) => handleChange(e)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="linkedin.com"
                 />
               </div>
             </div>
             <button
-              type="submit"
-              class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-lime-200 rounded-lg focus:ring-4 focus:ring-primary-200">
-              Save General Information
+              onClick={handleSubmit}
+              class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-lime-200 rounded-lg focus:ring-4 focus:ring-primary-200"
+            >
+              Update{" "}
             </button>
-          </form>
+          </div>
         </div>
       </section>
     </>
