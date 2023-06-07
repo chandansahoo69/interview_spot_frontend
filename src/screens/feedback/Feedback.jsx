@@ -106,7 +106,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, punctuality: "poor" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.punctuality === "poor" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Poor
                 </button>
@@ -117,7 +119,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, punctuality: "fair" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.punctuality === "fair" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Fair
                 </button>
@@ -128,7 +132,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, punctuality: "good" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.punctuality === "good" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Good
                 </button>
@@ -139,7 +145,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, punctuality: "excellent" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.punctuality === "excellent" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Excellent
                 </button>
@@ -160,7 +168,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, communicationSkill: "poor" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.communicationSkill === "poor" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Poor
                 </button>
@@ -171,7 +181,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, communicationSkill: "fair" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.communicationSkill === "fair" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Fair
                 </button>
@@ -182,7 +194,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, communicationSkill: "good" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.communicationSkill === "good" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Good
                 </button>
@@ -193,7 +207,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, communicationSkill: "excellent" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.communicationSkill === "excellent" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Excellent
                 </button>
@@ -214,7 +230,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, professionalism: "poor" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.professionalism === "poor" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Poor
                 </button>
@@ -225,7 +243,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, professionalism: "fair" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.professionalism === "fair" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Fair
                 </button>
@@ -236,7 +256,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, professionalism: "good" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.professionalism === "good" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Good
                 </button>
@@ -247,7 +269,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, professionalism: "excellent" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.professionalism === "excellent" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Excellent
                 </button>
@@ -268,7 +292,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, technicalSkill: "poor" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.technicalSkill === "poor" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Poor
                 </button>
@@ -279,7 +305,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, technicalSkill: "fair" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.technicalSkill === "fair" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Fair
                 </button>
@@ -290,7 +318,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, technicalSkill: "good" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.technicalSkill === "good" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Good
                 </button>
@@ -301,7 +331,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, technicalSkill: "excellent" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.technicalSkill === "excellent" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Excellent
                 </button>
@@ -322,7 +354,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, problemSolvingSkill: "poor" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.problemSolvingSkill === "poor" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Poor
                 </button>
@@ -333,7 +367,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, problemSolvingSkill: "fair" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.problemSolvingSkill === "fair" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Fair
                 </button>
@@ -344,7 +380,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, problemSolvingSkill: "good" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.problemSolvingSkill === "good" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Good
                 </button>
@@ -355,7 +393,9 @@ const Feedback = () => {
                   onClick={() => {
                     setInputs({ ...inputs, problemSolvingSkill: "excellent" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.problemSolvingSkill === "excellent" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Excellent
                 </button>
