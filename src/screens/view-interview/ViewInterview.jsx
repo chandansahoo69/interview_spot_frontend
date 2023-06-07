@@ -95,7 +95,7 @@ const ViewInterview = () => {
       )}
 
       {/* feedback */}
-      {interviewDetails?.feedback?.length === 0 ? (
+      {!interviewDetails.feedback ? (
         <div>
           {interviewDetails?.status === "Pending" ? (
             <div>Interview Was not Accepted yet.</div>

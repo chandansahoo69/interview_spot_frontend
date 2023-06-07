@@ -10,6 +10,7 @@ const InterviewerDashboard = () => {
   const navigate = useNavigate();
   const [pendingInterviews, setPendingInterviews] = useState([]);
   const [scheduledInterviews, setScheduledInterviews] = useState([]);
+  const [reason, setReason] = useState("");
 
   const getAllPendingInterviews = () => {
     AuthService.getPendingInterview()
@@ -86,6 +87,18 @@ const InterviewerDashboard = () => {
 
   const handleClick = (id) => {
     window.location.href = `http://localhost:3000/interviewee/view-interview/${id}`;
+  };
+
+  const activeJoin = (timeSlot) => {
+    let currentTime = new Date();
+    let formattedTime = currentTime.getHours();
+    let time = timeSlot[0] + timeSlot[1];
+    // console.log(time, formattedTime);
+    if (formattedTime == time) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -232,13 +245,23 @@ const InterviewerDashboard = () => {
                   </td>
                   <td className="px-6 py-4">{interview?.timeSlot}</td>
                   <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => handleJoinInterview(interview?._id)}
-                      type="button"
-                      className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
-                    >
-                      join now
-                    </button>
+                    {!activeJoin(interview?.timeSlot) ? (
+                      <button
+                        type="button"
+                        onClick={() => handleJoinInterview(interview?._id)}
+                        className="focus:outline-none text-black bg-gray-400 hover:bg-[#989898] focus:ring-4 focus:ring-gray-700 cursor-not-allowed font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
+                      >
+                        join now
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleJoinInterview(interview?._id)}
+                        type="button"
+                        className="focus:outline-none text-black bg-limeGreen hover:bg-[#adbf38] focus:ring-4 focus:ring-limeGreen font-medium rounded-lg text-sm px-3 py-1.5 mr-2 mb-2"
+                      >
+                        join now
+                      </button>
+                    )}
                   </td>
                   <td class="px-6 py-4 text-center">
                     <button

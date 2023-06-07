@@ -78,8 +78,8 @@ class Http {
           })
           .catch((error) => {
             console.log("Occuring here error");
-            removeToken({ name: "token" });
-            window.location.href = "http://localhost:3000/login";
+            // removeToken({ name: "token" });
+            // window.location.href = "http://localhost:3000/login";
             return Promise.reject(error);
           });
       }

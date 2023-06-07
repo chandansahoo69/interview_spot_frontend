@@ -92,10 +92,10 @@ const InterviewerScheduleInterview = () => {
     inputs.interviewer = userResponse.username;
     inputs.interviewerId = userResponse.userId;
     inputs.createdBy = userResponse.userId;
-    console.log(inputs);
+    // console.log(inputs);
     AuthService.scheduleInterview(inputs)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         toast.success(response?.message);
         // navigate({ pathname: `${userResponse?.role}/dashboard` });
         setInputs(initialState);
@@ -111,7 +111,8 @@ const InterviewerScheduleInterview = () => {
       <div>
         <h1>Schedule an Interview</h1>
         <p className="text-sm">
-          Hello chandan! Plaese fill the form to schedule an interview
+          Hello {userResponse.username}! Plaese fill the form to schedule an
+          interview
         </p>
       </div>
       {/* Select interviewee section */}

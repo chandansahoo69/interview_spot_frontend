@@ -11,13 +11,27 @@ const InterviewerProfileEdit = () => {
 
   const id = a[a.length - 2];
   const [user, setUser] = useState({});
+  const [image, setImage] = useState(null);
   const [input, setInput] = useState({
+    avatar: "",
     phone: "",
     username: "",
     gender: "",
     linkedIn: "",
     department: "",
   });
+
+  function captureImage(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      setImage(reader.result);
+      setInput({ ...input, avatar: reader.result });
+    };
+  }
+
+  //   console.log("image loaded", input.avatar);
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -70,7 +84,7 @@ const InterviewerProfileEdit = () => {
               <div class="sm:col-span-2 flex items-end gap-5">
                 <img
                   class="rounded w-36 h-36"
-                  src={profileImage}
+                  src={image ? image : profileImage}
                   alt="Extra large avatar"
                 />
 
@@ -82,6 +96,7 @@ const InterviewerProfileEdit = () => {
                     Upload file
                   </label>
                   <input
+                    onChange={captureImage}
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id="image-input"
                     type="file"

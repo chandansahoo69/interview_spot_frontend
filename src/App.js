@@ -25,6 +25,7 @@ import InterviewerProfileEdit from "screens/interviewer-profile-edit/Interviewer
 import RoutePage from "screens/route-page/RoutePage";
 import IntervieweeProfileEdit from "screens/interviewee-profile-edit/IntervieweeProfileEdit";
 import LandingPage from "screens/landing-page/LandingPage";
+import Acknowledgement from "screens/Acknowledgement/Acknowledgement";
 
 function App() {
   const { userResponse } = useSelector((state) => state.auth);
@@ -56,6 +57,7 @@ function App() {
               element={<InterviewerCompletedInterview />}
             />
             <Route path="feedback" element={<Feedback />} />
+            <Route path="ackonwledgement" element={<Acknowledgement />} />
             <Route
               path="interviewer/view-interview/:id"
               element={<ViewInterview />}

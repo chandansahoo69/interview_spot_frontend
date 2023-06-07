@@ -158,7 +158,7 @@ const IntervieweeProfile = () => {
             <div className="flex flex-col items-center px-5 py-10">
               <img
                 className="w-24 h-24 rounded-full shadow-lg"
-                src={profileFemalePic}
+                src={user.avatar ? user.avatar : profileFemalePic}
               />
               <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
                 Subrata Samartha

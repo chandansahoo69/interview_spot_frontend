@@ -132,7 +132,8 @@ const IntervieweeScheduleInterview = () => {
       <div>
         <h1>Schedule an Interview</h1>
         <p className="text-sm">
-          Hello chandan! Plaese fill the form to schedule an interview
+          Hello {userResponse.username}! Plaese fill the form to schedule an
+          interview
         </p>
       </div>
       {/* Select interviewee section */}

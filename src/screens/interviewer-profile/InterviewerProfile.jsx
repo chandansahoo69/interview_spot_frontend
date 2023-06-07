@@ -43,7 +43,7 @@ const InterviewerProfile = () => {
           <div class="flex flex-col items-center">
             <img
               class="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src={ProfileFemale}
+              src={user.avatar ? user.avatar : ProfileFemale}
               alt="Chandan Sahoo"
             />
             <h5 class="mb-1 text-xl font-medium text-gray-900">

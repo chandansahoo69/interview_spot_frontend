@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { MdOutlineDashboard } from "react-icons/md";
+import { MdOutlineDashboard, MdOutlineLogout } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import LogoInterviewspot from "assets/images/logoInterviewspot.png";
 import { useSelector } from "react-redux";
+import AuthService from "auth/authService";
+import { removeToken } from "utils/token";
+import { toast } from "react-hot-toast";
 
 const Layout = () => {
+  const navigate = useNavigate();
   const { userResponse } = useSelector((state) => state.auth);
 
   const menus = [
@@ -38,6 +42,26 @@ const Layout = () => {
 
   const [open, setOpen] = useState(true);
   const [tab, setTab] = useState(0);
+
+  const handleLogout = () => {
+    console.log("logout");
+    AuthService.logout()
+      .then((resp) => {
+        // console.log(resp);
+        toast.success("logged out");
+        removeToken({
+          name: "token",
+        });
+        removeToken({
+          name: "refresh",
+        });
+
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log("logout error", err);
+      });
+  };
 
   return (
     <>
@@ -105,6 +129,42 @@ const Layout = () => {
                 </h2>
               </Link>
             ))}
+            <div
+              // to={menu?.link}
+              // key={i}
+              onClick={() => {
+                setTab(5);
+                handleLogout();
+              }}
+              className={` ${"mt-5"} group flex items-center text-sm ${
+                tab === 5 && "bg-[#dcf247]"
+              } gap-3.5 font-medium p-2 hover:bg-[#dcf247] rounded-md cursor-pointer`}
+            >
+              <div>
+                {React.createElement(MdOutlineLogout, {
+                  size: "20",
+                  color: `${tab === 5 ? "#000" : "#b1b1b1"}`,
+                })}
+              </div>
+              <h2
+                style={{
+                  color: `${tab === 5 ? "#000" : "#b1b1b1"}`,
+                  transitionDelay: `${5 + 3}00ms`,
+                }}
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                Logout
+              </h2>
+              <h2
+                className={`${
+                  open && "hidden"
+                } absolute left-48 bg-white font-semibold whitespace-pre text-[#b1b1b1] rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}
+              >
+                Logout
+              </h2>
+            </div>
           </div>
         </div>
         <div className="m-3 text-xl text-gray-900 font-semibold w-full">

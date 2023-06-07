@@ -3,9 +3,11 @@ import AuthService from "auth/authService";
 import moment from "moment";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const IntervieweeCompletedInterview = () => {
   const navigate = useNavigate();
+  const { userResponse } = useSelector((state) => state.auth);
   const [completedInterviews, setCompletedInterviews] = useState([]);
   const [pendingFeedbacks, setPendingFeedbacks] = useState([]);
 
@@ -47,8 +49,8 @@ const IntervieweeCompletedInterview = () => {
       <div>
         <h1>Compeleted Interviews</h1>
         <p className="text-sm text-slate-500">
-          Hello Chandan! Go through all your completed interview and proveide
-          valualble feedback to peding interview
+          Hello {userResponse.username}! Go through all your completed interview
+          and proveide valualble feedback to peding interview
         </p>
       </div>
       {/* Pending Feedback Table */}
