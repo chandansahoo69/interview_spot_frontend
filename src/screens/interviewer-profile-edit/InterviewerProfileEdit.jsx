@@ -59,6 +59,7 @@ const InterviewerProfileEdit = () => {
           email: response.userId.email,
           username: response.userId.username,
           gender: response.gender,
+          avatar: response.avatar,
           linkedIn: response.linkedIn,
           department: response.department,
         };
@@ -169,6 +170,7 @@ const InterviewerProfileEdit = () => {
                 <input
                   type="url"
                   id="linkedin"
+                  name="linkedIn"
                   value={input.linkedIn}
                   onChange={(e) => handleChange(e)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

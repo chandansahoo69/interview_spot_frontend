@@ -136,6 +136,7 @@ const IntervieweeProfileEdit = () => {
           username: response.userId.username,
           email: response.userId.email,
           phone: response.phone,
+          avatar: response.avatar,
           gender: response.gender,
           dob: moment(response.dob).format("YYYY-MM-DD"),
           address: response.address,

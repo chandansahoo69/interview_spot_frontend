@@ -131,7 +131,9 @@ const InterviewerScheduleInterview = () => {
                   onClick={() => {
                     setInputs({ ...inputs, category: "Behavioral" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.category === "Behavioral" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Behavioral
                 </button>
@@ -142,7 +144,9 @@ const InterviewerScheduleInterview = () => {
                   onClick={() => {
                     setInputs({ ...inputs, category: "Technical" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.category === "Technical" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Technical
                 </button>
@@ -153,7 +157,9 @@ const InterviewerScheduleInterview = () => {
                   onClick={() => {
                     setInputs({ ...inputs, category: "Special" });
                   }}
-                  className="text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 "
+                  className={`${
+                    inputs.category === "Special" && "bg-limeGreen"
+                  } text-black hover:text-white border border-limeGreen hover:bg-limeGreen focus:ring-4 focus:outline-none focus:ring-[#dbff4a] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                 >
                   Special
                 </button>
