@@ -5,6 +5,7 @@ import { login } from "state/AuthSlice";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import LogoInterviewspot from "assets/images/logoInterviewspot.png";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -57,12 +58,12 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen flex flex-col">
-      <nav className="px-3 py-2 flex flex-0 justify-between md:px-5 md:py-2">
+      <nav className="px-3 py-2 flex flex-0 justify-center md:px-5 md:py-2 bg-white">
         <div className="flex flex-row gap-2">
-          <img src="./Assets/logo-interviewspot.png" alt="" />
+          <img src={LogoInterviewspot} alt="" className="pt-1" />
           <div className="flex flex-col font-jakarta text-2xl font-bold">
-            <p className="text-[#d1e552]">Interview</p>
-            <p className="mt-[-4px]">Spot</p>
+            <p className="text-[#d1e552] font-medium">Interview</p>
+            <p className="mt-[-4px] text-black font-bold">Spot</p>
           </div>
         </div>
       </nav>
@@ -77,8 +78,7 @@ const LoginPage = () => {
                 <div>
                   <label
                     for="email"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your email
                   </label>
                   <input
@@ -97,8 +97,7 @@ const LoginPage = () => {
                 <div>
                   <label
                     for="password"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Password
                   </label>
                   <input
@@ -117,23 +116,20 @@ const LoginPage = () => {
                 <div className="flex items-center justify-end">
                   <a
                     href="#"
-                    className="text-sm font-medium text-primary-600 hover:underline"
-                  >
+                    className="text-sm font-medium text-primary-600 hover:underline">
                     Forgot password?
                   </a>
                 </div>
                 <button
                   onClick={handleClick}
-                  className="w-full text-white bg-[#7b6e5b] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                >
+                  className="w-full text-white bg-[#7b6e5b] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}
                   <NavLink
                     to="/signup"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                     Sign up
                   </NavLink>
                 </p>
